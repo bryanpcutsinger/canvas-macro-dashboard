@@ -3,7 +3,7 @@
 A self-updating dashboard of U.S. macroeconomic data, built for embedding in
 Canvas course pages. Students see current data every time they open the course.
 
-**Live site:** https://bryanpcutsinger.github.io/canvas-macro-dashboard/
+**Live site:** https://bryancutsinger.com/canvas-macro-dashboard/
 
 | Indicator | FRED series | Shown as |
 |---|---|---|
