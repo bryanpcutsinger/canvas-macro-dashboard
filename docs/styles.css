@@ -66,6 +66,7 @@ a { color: var(--series-1); }
 }
 
 .tile {
+  position: relative;
   background: var(--surface-1);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -73,6 +74,19 @@ a { color: var(--series-1); }
   display: flex;
   flex-direction: column;
 }
+.tile:hover { border-color: var(--baseline); }
+
+/* The whole card is a link to the FRED series page. */
+.tile-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.tile-link:focus-visible::after { box-shadow: 0 0 0 2px var(--series-1); }
+.tile-ext { color: var(--muted); font-size: 0.7rem; }
+.tile:hover .tile-ext { color: var(--series-1); }
 
 .tile-label { font-size: 0.8rem; color: var(--ink-2); }
 .tile-value { font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
@@ -98,7 +112,7 @@ a { color: var(--series-1); }
 
 /* ------------------------------------------------------------- sparklines */
 
-.spark { position: relative; outline: none; cursor: crosshair; }
+.spark { position: relative; z-index: 2; outline: none; cursor: crosshair; }
 .spark:focus-visible { box-shadow: 0 0 0 2px var(--series-1); border-radius: 4px; }
 .spark svg { display: block; touch-action: none; }
 

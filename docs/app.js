@@ -27,7 +27,20 @@ function renderTile(ind) {
   const fmt = (v) => `${(+v).toFixed(decimals)}%`;
 
   const tile = text("div", "tile");
-  tile.appendChild(text("div", "tile-label", ind.label));
+
+  // Stretched link: covers the card and opens the FRED series page. The
+  // sparkline sits above it (z-index) so hover/tap there still reads values.
+  const link = text("a", "tile-link");
+  link.href = ind.source.fred_url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.setAttribute("aria-label",
+    `${ind.label}: open the full series at FRED (new tab)`);
+  tile.appendChild(link);
+
+  const label = text("div", "tile-label", ind.label);
+  label.appendChild(text("span", "tile-ext", " ↗"));
+  tile.appendChild(label);
 
   tile.appendChild(text("div", "tile-value", ind.value_display));
 
