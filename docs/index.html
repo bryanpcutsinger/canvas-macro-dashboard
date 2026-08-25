@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>U.S. Macro Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="banner" class="banner" hidden></div>
+
+<h1 class="sr-only">U.S. Macroeconomic Dashboard</h1>
+
+<main>
+  <div id="tiles" class="tiles"></div>
+</main>
+
+<footer>
+  <p>Data from <a href="https://fred.stlouisfed.org" target="_blank"
+     rel="noopener">FRED</a> · <span id="updated"></span> ·
+     Hover or tap a trend line to read past values (each card shows two years).</p>
+</footer>
+
+<noscript><p class="banner warn">This dashboard needs JavaScript to display
+  the data. The raw numbers are in <a href="data/dashboard.json">dashboard.json</a>.</p></noscript>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

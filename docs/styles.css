@@ -1,0 +1,130 @@
+/* Design tokens: light is the default; dark follows the OS setting.
+   Palette values follow the validated reference palette (dataviz method). */
+
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --series-1: #2a78d6;
+  --warn-bg: rgba(250, 178, 25, 0.18);
+  --warn-border: #c98500;
+  --error-bg: rgba(208, 59, 59, 0.12);
+  --error-border: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --series-1: #3987e5;
+    --warn-bg: rgba(250, 178, 25, 0.14);
+    --warn-border: #fab219;
+    --error-bg: rgba(230, 103, 103, 0.14);
+    --error-border: #e66767;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 12px 14px 20px;
+  background: var(--page);
+  color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a { color: var(--series-1); }
+
+.banner {
+  padding: 8px 12px;
+  margin: 0 0 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.banner.warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+.banner.error { background: var(--error-bg); border: 1px solid var(--error-border); }
+
+/* ---------------------------------------------------------------- tiles */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+}
+
+.tile {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tile-label { font-size: 0.8rem; color: var(--ink-2); }
+.tile-value { font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+.tile-delta { font-size: 0.8rem; color: var(--ink-2); margin-top: 1px; }
+.tile-arrow { font-size: 0.7rem; }
+.tile-spark { margin: 8px 0 5px; min-height: 44px; }
+.tile-asof { font-size: 0.72rem; color: var(--muted); }
+.tile-plain {
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--grid);
+}
+.tile-stale {
+  font-size: 0.72rem;
+  margin-top: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+}
+
+/* ------------------------------------------------------------- sparklines */
+
+.spark { position: relative; outline: none; cursor: crosshair; }
+.spark:focus-visible { box-shadow: 0 0 0 2px var(--series-1); border-radius: 4px; }
+.spark svg { display: block; touch-action: none; }
+
+.spark-readout {
+  display: none;
+  position: absolute;
+  top: -6px;
+  z-index: 2;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.spark-readout span { color: var(--muted); }
+
+footer { margin-top: 12px; color: var(--muted); font-size: 0.75rem; }
+footer p { margin: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}

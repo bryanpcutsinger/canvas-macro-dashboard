@@ -1,0 +1,96 @@
+# Pull fresh data from FRED, commit it, and deploy the site to GitHub Pages.
+#
+# Cron times are UTC. Both runs clear the 8:30 a.m. ET releases whether the
+# US is on EST or EDT, and sit off the top of the hour because GitHub delays
+# jobs scheduled at :00.
+#
+# Commits use PAT_PUSH (a fine-grained personal access token) when present, so
+# the push counts as real repository activity — GitHub disables cron workflows
+# in public repos after 60 days without activity, and whether bot commits reset
+# that timer is undocumented. Falls back to the built-in token if PAT_PUSH is
+# not set. "[skip ci]" in the commit message stops the data commit from
+# re-triggering this workflow.
+
+name: Update dashboard data
+
+on:
+  schedule:
+    - cron: '20 14 * * 1-5'   # 10:20 EDT / 9:20 EST — after the morning releases
+    - cron: '20 21 * * 1-5'   # afternoon catch-up: revisions + latest fed funds
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'docs/**'
+      - '.github/workflows/**'
+      - '!docs/data/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_PUSH || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run tests
+        run: python3 -m unittest discover -s tests
+
+      - name: Build dashboard data
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python3 scripts/build_data.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "macro-dashboard-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/data/dashboard.json logs/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update dashboard data [skip ci]"
+            git push
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Runs last so the site still deploys (stale-but-labeled), then the job
+      # fails, which sends the failure email.
+      - name: Fail if any series was stale
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          d = json.load(open("docs/data/dashboard.json"))
+          if d["build_status"] != "ok":
+              print("build_status:", d["build_status"])
+              print(*d.get("warnings", []), sep="\n")
+              sys.exit(1)
+          EOF
