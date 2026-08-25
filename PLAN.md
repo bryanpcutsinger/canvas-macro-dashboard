@@ -68,12 +68,19 @@ README.md                  # setup steps (PAT, secret, Pages) + maintenance runb
 - [x] Build all files
 - [x] Run pipeline locally with real FRED pull; verify metadata assertions + pc1 cross-check
 - [x] Preview at 375px and desktop; screenshot
-- [ ] Bryan: approve git init/commit, `gh repo create` (public — required for free Pages), push
-- [ ] Bryan: create fine-grained PAT + add `FRED_API_KEY` and `PAT_PUSH` secrets
-- [ ] Set Pages source to GitHub Actions; run workflow once manually
-- [ ] Confirm on first run: the `!docs/data/**` push-paths negation works, and
-      the `PAT_PUSH || github.token` checkout fallback behaves as expected
-- [ ] Paste embed snippet into a Canvas page; check on phone + Canvas mobile app
+- [x] Repo created (public), pushed: https://github.com/bryanpcutsinger/canvas-macro-dashboard
+      (needed `gh auth refresh -s workflow` — Bryan authorized the device code)
+- [x] `FRED_API_KEY` secret set; Pages enabled (build_type=workflow). Live at
+      https://bryancutsinger.com/canvas-macro-dashboard/ (user-level custom domain)
+- [x] Manual workflow run green end-to-end (2026-08-25); CI pulled real data and deployed
+- [x] Embedded in AI Sandbox course (canvas.fau.edu/courses/206905): new "Course Home"
+      page with the iframe, set as Front Page, course home switched from Modules;
+      verified in Student View. His older "Dashboard Embed Test" page left untouched.
+- [ ] Bryan: create fine-grained PAT and add as `PAT_PUSH` secret (keepalive for the
+      60-day cron disable; workflow currently falls back to github.token)
+- [ ] Bryan: turn on Actions failure emails (GitHub Settings → Notifications)
+- [ ] Confirm on a data-commit run: `!docs/data/**` push-paths negation prevents loops
+- [ ] Roll out to ECO 2013/2023 course pages when ready (same snippet)
 
 ## Open items surfaced to Bryan
 
