@@ -80,7 +80,9 @@ README.md                  # setup steps (PAT, secret, Pages) + maintenance runb
       60-day cron disable; workflow currently falls back to github.token)
 - [ ] Bryan: turn on Actions failure emails (GitHub Settings → Notifications)
 - [ ] Confirm on a data-commit run: `!docs/data/**` push-paths negation prevents loops
-- [ ] Roll out to ECO 2013/2023 course pages when ready (same snippet)
+- [x] ECO 2013-007 (canvas.fau.edu/courses/202146): embedded at the top of the
+      "ECO 2013 FAQ" front page, above the FAQ content; verified in Student View
+- [ ] Roll out to ECO 2023 when ready (same snippet)
 
 ## Open items surfaced to Bryan
 
