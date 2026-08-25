@@ -72,16 +72,16 @@ MAX_OBS_AGE_DAYS = {"monthly": 100, "quarterly": 215, "daily": 12}
 
 INDICATORS = [
     {
-        "key": "unemployment",
-        "label": "Unemployment rate",
-        "plain_language": "The share of the labor force that is not working and is looking for work.",
-        "origin": "BLS via FRED",
-    },
-    {
         "key": "gdp_growth",
         "label": "Real GDP growth",
         "plain_language": "How fast the economy's total output grew last quarter, at an annual rate, adjusted for inflation.",
         "origin": "BEA via FRED",
+    },
+    {
+        "key": "unemployment",
+        "label": "Unemployment rate",
+        "plain_language": "The share of the labor force that is not working and is looking for work.",
+        "origin": "BLS via FRED",
     },
     {
         "key": "cpi_inflation",
