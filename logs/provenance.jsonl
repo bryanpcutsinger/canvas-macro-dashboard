@@ -696,3 +696,8 @@
 {"run_utc": "2026-10-21T18:44:30Z", "series_id": "cpi_inflation", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
 {"run_utc": "2026-10-21T18:44:30Z", "series_id": "pce_inflation", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
 {"run_utc": "2026-10-21T18:44:30Z", "series_id": "fed_funds", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
+{"run_utc": "2026-10-22T00:02:27Z", "series_id": "gdp_growth", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
+{"run_utc": "2026-10-22T00:02:27Z", "series_id": "unemployment", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
+{"run_utc": "2026-10-22T00:02:27Z", "series_id": "cpi_inflation", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
+{"run_utc": "2026-10-22T00:02:27Z", "series_id": "pce_inflation", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
+{"run_utc": "2026-10-22T00:02:27Z", "series_id": "fed_funds", "outcome": "error: series failed after 3 attempts: Expecting value: line 1 column 1 (char 0)"}
