@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -78,8 +78,21 @@ jobs:
         with:
           path: docs
 
+      # deploy-pages sometimes looks up the artifact a split second after the
+      # upload finishes and finds nothing ("No artifacts named github-pages").
+      # That is a GitHub-side timing glitch, so wait and try once more.
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Wait before retrying deploy
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+
+      - name: Retry deploy to GitHub Pages
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
 
       # Runs last so the site still deploys (stale-but-labeled), then the job
